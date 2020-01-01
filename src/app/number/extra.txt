@@ -1,0 +1,64 @@
+  updatePhoneNumberAndselectedCountry(index) {
+    const dialCode = this.phoneNumber.substr(1, index - 1);
+    if (dialCode.length === 0) {
+      this.inputError.emit(this.inputErrors[5]);
+      return null;
+    }
+    const country = this.countryService.getCountryFromDialCode(dialCode);
+    if (country == null) {
+      this.inputError.emit(this.inputErrors[6]);
+      return null;
+    }
+    this.selectedCountry = country;
+    const pnumber = this.removeSpacesAndHyphens(this.phoneNumber.substr(index + 1));
+    if (pnumber.length === 0) {
+      this.inputError.emit(this.inputErrors[7]);
+      return null;
+    }
+    const pn = new PhoneNumber(pnumber, country.countryCode);
+    if (pn.toJSON().valid) {
+      this.phoneNumber = pn.toJSON().number.international;
+    }
+    return pn;
+  }
+
+
+
+
+
+
+   // getSeperatorIndex() {
+  //   let index = this.phoneNumber.indexOf(' ');
+  //   if (index === -1) {
+  //     index = this.phoneNumber.indexOf('-');
+  //   }
+  //   return index;
+  // }
+
+  // verifAndEmit() {
+  //   this.inputError.emit(null);
+  //   if (this.required && this.phoneNumber.length === 0) {
+  //     this.inputError.emit(this.inputErrors[0]);
+  //   } else if (this.phoneNumber.length > 0) {
+  //     if (Number(this.removeSpacesAndHyphens(this.phoneNumber))) {
+  //       if (this.phoneNumber.startsWith('+')) {
+  //         const index = this.getSeperatorIndex();
+  //         if (index !== -1 && index <= 5) {
+  //           const pn = this.updatePhoneNumberAndselectedCountry(index);
+  //           if (pn != null) {
+  //             this.state.emit(pn.toJSON());
+  //           }
+  //         } else if (index === -1) {
+  //           this.inputError.emit(this.inputErrors[1]);
+  //         } else {
+  //           this.inputError.emit(this.inputErrors[2]);
+  //         }
+  //       } else {
+  //         this.inputError.emit(this.inputErrors[3]);
+  //       }
+  //     } else {
+  //       this.inputError.emit(this.inputErrors[4]);
+  //     }
+
+  //   }
+  // }

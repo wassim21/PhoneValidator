@@ -1,0 +1,193 @@
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { CountryService } from './country.service';
+import { Country } from './country.model';
+import { NumberService } from './number.service';
+import { SearchField } from './searchField.enum';
+
+@Component({
+  selector: 'app-number',
+  templateUrl: './number.component.html',
+  styleUrls: ['./number.component.css']
+})
+export class NumberComponent implements OnInit {
+
+  @Input() required = false;
+  @Input() searchField;
+  @Input() phoneNumber = '';
+  @Input() defaultCountryCode = '';
+  @Input() preferredCountryCodes: string[] = [];
+  @Input() placeholder = '';
+  @Output() state = new EventEmitter();
+  @Output() inputError = new EventEmitter<{ errorCode: number; message: string }>();
+
+  inputErrors: { errorCode: number; message: string }[] = [
+    { errorCode: 0, message: 'phone number is required' },
+    { errorCode: 1, message: 'phone number must contain + before dial code' },
+    { errorCode: 2, message: 'phone number is invalid' },
+    { errorCode: 3, message: 'dial code is undefined' },
+  ];
+
+  countries: Country[] = [];
+  data: Country[];
+  selectedCountry: Country = {
+    name: '',
+    dialCode: '',
+    countryCode: ''
+  };
+
+  constructor(private countryService: CountryService, private numberService: NumberService) { }
+
+  ngOnInit() {
+    this.countries = this.getCountries();
+    this.data = this.countries;
+    this.updatePreferredCountryCodes(this.defaultCountryCode);
+    this.updateselectedCountryWithDefault();
+    this.verifAndEmit();
+  }
+
+  handleFilter(value: string) {
+    this.data = this.searchData(value);
+  }
+
+  updatePreferredCountryCodes(countryCode: string) {
+    if (this.preferredCountryCodes.length > 0) {
+      if (countryCode.length > 0 && this.preferredCountryCodes.findIndex(c => countryCode === c) === -1) {
+        this.preferredCountryCodes.push(countryCode);
+      }
+      this.getPreferredCountries();
+    }
+  }
+
+  updateselectedCountryWithDefault() {
+    if (this.defaultCountryCode.length > 0) {
+      const country = this.countryService.getCountryFromCountryCode(this.defaultCountryCode);
+      if (country !== null) {
+        this.selectedCountry = country;
+      }
+    }
+  }
+
+  getPreferredCountries() {
+    this.data = [];
+    this.preferredCountryCodes.forEach(countryCode => {
+      const countries = this.countries.filter((s) => s.countryCode.toLowerCase() === countryCode);
+      this.data.push(...countries);
+    });
+    this.data = this.data.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  searchData(value: string) {
+    switch (this.searchField) {
+      case SearchField.DialCode:
+        return this.searchWithDialCode(value);
+
+      case SearchField.CountryCode:
+        return this.searchWithCountryCode(value);
+
+      case SearchField.Name:
+        return this.searchWithName(value);
+
+      default:
+        return this.searchWithAllFields(value);
+    }
+  }
+
+  searchWithDialCode(value: string) {
+    return this.countries.filter((s) => s.dialCode.toLowerCase().indexOf(value) !== -1);
+  }
+
+  searchWithName(value: string) {
+    return this.countries.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  searchWithCountryCode(value: string) {
+    return this.countries.filter((s) => s.countryCode.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  searchWithAllFields(value: string) {
+    if (Number(value)) {
+      return this.searchWithDialCode(value);
+    } else {
+      if (value.length <= 2) {
+        const results = this.searchWithCountryCode(value);
+        if (results.length > 0) {
+          return results;
+        }
+      }
+      return this.searchWithName(value);
+    }
+  }
+
+  verifAndEmit() {
+    this.inputError.emit(null);
+    if (this.required && this.phoneNumber.length === 0) {
+      this.inputError.emit(this.inputErrors[0]);
+    } else if (this.phoneNumber.length > 0) {
+      if (Number(this.removeSpacesAndHyphens(this.phoneNumber))) {
+        if (this.phoneNumber.startsWith('+')) {
+          const pn = new PhoneNumber(this.phoneNumber);
+          const phoneState = pn.toJSON();
+          this.state.emit(phoneState);
+          this.checkDialCodeAndUpdate(phoneState);
+        } else {
+          this.inputError.emit(this.inputErrors[1]);
+          this.ResetSelectedCountry();
+        }
+      } else {
+        this.inputError.emit(this.inputErrors[2]);
+      }
+    }
+  }
+
+  checkDialCodeAndUpdate(phoneState) {
+    if (phoneState.regionCode !== null) {
+      this.selectedCountry = this.countryService.getCountryFromCountryCode(phoneState.regionCode);
+      if (phoneState.valid) {
+        this.phoneNumber = phoneState.number.international;
+        if (this.preferredCountryCodes.length > 0) {
+          this.updatePreferredCountryCodes(phoneState.regionCode);
+        }
+      } else {
+        this.inputError.emit(this.inputErrors[2]);
+      }
+    } else {
+      this.inputError.emit(this.inputErrors[3]);
+      this.ResetSelectedCountry();
+    }
+  }
+
+  ResetSelectedCountry() {
+    this.selectedCountry = {
+      name: '',
+      dialCode: '',
+      countryCode: ''
+    };
+  }
+
+
+  updatephoneNumber() {
+    this.phoneNumber = '+' + this.selectedCountry.dialCode + ' ';
+    this.verifAndEmit();
+  }
+
+  getCountries() {
+    return this.countryService.getCountries();
+  }
+
+  keyDown(event) {
+    if (event.keyCode === 13) {
+      this.verifAndEmit();
+    }
+  }
+
+  validateNumber(event) {
+    return this.numberService.validateNumber(event);
+  }
+
+  removeSpacesAndHyphens(word) {
+    return word.replace(/\s|-/g, '');
+  }
+
+}
+
+export const PhoneNumber = require('awesome-phonenumber');
