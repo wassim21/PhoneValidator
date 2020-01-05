@@ -9,8 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import 'hammerjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CountryService } from './number/country.service';
-import { NumberService } from './number/number.service';
+import { CountryService } from './number/services/country.service';
+import { NumberService } from './number/services/number.service';
 
 @NgModule({
   declarations: [

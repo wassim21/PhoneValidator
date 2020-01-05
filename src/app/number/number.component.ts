@@ -1,9 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input, forwardRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { CountryService } from './country.service';
-import { Country, OutputFormat } from './country.model';
-import { NumberService } from './number.service';
-import { SearchField } from './searchField.enum';
+import { Component, OnInit, Output, EventEmitter, Input, forwardRef } from '@angular/core';
+import { CountryService } from './services/country.service';
+import { Country } from './models/country.model';
+import { NumberService } from './services/number.service';
+import { SearchField } from './models/searchField.enum';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { OutputFormat } from './models/outputFormat.enum';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -258,8 +259,7 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
       default:
         return phoneStateNumber.international;
     }
-  } 
-
+  }
 }
 
 export const PhoneNumber = require('awesome-phonenumber');

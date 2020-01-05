@@ -1,4 +1,4 @@
-export const LOCALES = {
+export const CountriesNames = {
     ax: 'AALAND ISLANDS',
     af: 'AFGHANISTAN',
     al: 'ALBANIA',

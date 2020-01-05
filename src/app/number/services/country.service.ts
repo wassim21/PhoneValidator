@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Country } from './country.model';
-import { countries } from './countries';
-import { LOCALES } from './Locales';
+import { Country } from '../models/country.model';
+import { countries } from '../consts/countries';
+import { CountriesNames } from '../consts/countriesNames';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class CountryService {
   private loadCountries(): Country[] {
     // let get the locale based country names
     countries.forEach((country: Country) => {
-      country.name = LOCALES[country.countryCode]
+      country.name = CountriesNames[country.countryCode]
         .toLowerCase()
         .replace(/\b(\w)/g, s => s.toUpperCase());
     });
