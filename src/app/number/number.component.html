@@ -1,10 +1,17 @@
-<div class="example-wrapper">
-    <kendo-dropdownlist [data]="data" [filterable]="true" [textField]="'name'" [valueField]="'countryCode'"
-        [(ngModel)]="selectedCountry" (filterChange)="handleFilter($event)"
-        (valueChange)="updatephoneNumber()">
-        <ng-template kendoDropDownListItemTemplate let-dataItem>
-            <span>{{ dataItem.name }}</span> <span style="color: blue;">&nbsp; +{{ dataItem.dialCode }}</span>
-        </ng-template>
-    </kendo-dropdownlist>
-    <input kendoTextBox [(ngModel)]="phoneNumber" (focusout)="verifAndEmit()" (keydown)="keyDown($event)" (keypress)="validateNumber($event)" [placeholder]="placeholder" />
+<div class="container fullSize">
+    <div class="row fullSize" #dropdown>
+        <div [ngStyle]="{width: widthDropdown, height: height}">
+            <kendo-dropdownlist [data]="data" [filterable]="true" [textField]="'name'" [valueField]="'countryCode'"
+                [(ngModel)]="selectedCountry" (filterChange)="handleFilter($event)" (valueChange)="updatephoneNumber()" [ngStyle]="{ height: height}" class="fixWidth">
+                <ng-template kendoDropDownListItemTemplate let-dataItem>
+                    <span>{{ dataItem.name }}</span> <span style="color: gray;">&nbsp; +{{ dataItem.dialCode }}</span>
+                </ng-template>
+            </kendo-dropdownlist>
+        </div>
+        <div [ngStyle]="{width: widthInput, height: height}">
+            <input kendoTextBox [(ngModel)]="phoneNumber" (focusout)="verifAndEmit()" (keydown)="keyDown($event)"
+                (keypress)="validateNumber($event)" [placeholder]="placeholder" class="input" (blur)="onBlur()"
+                (change)="changefn()"  [ngStyle]="{ height: height}" class="fixWidth" />
+        </div>
+    </div>
 </div>

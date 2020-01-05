@@ -1,2 +1,4 @@
-<app-number (state)="getState($event)" [required] = "false" (inputError)="getInputError($event)"  [placeholder]="'+31881122334'" [searchField]="'all'"  [phoneNumber]="'+21621313562'" [preferredCountryCodes]="preferredCountryCodes" ></app-number>
-{{inputError.message}}
+<app-number (state)="getState($event)" [required]="false" (inputError)="getInputError($event)"
+    [placeholder]="'+31881122334'" [searchField]="'all'" [preferredCountryCodes]="preferredCountryCodes" 
+    [outputFormat]="'rfc3966'"></app-number>
+{{inputError.message}} <br />

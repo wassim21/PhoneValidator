@@ -1,24 +1,34 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, forwardRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CountryService } from './country.service';
-import { Country } from './country.model';
+import { Country, OutputFormat } from './country.model';
 import { NumberService } from './number.service';
 import { SearchField } from './searchField.enum';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => NumberComponent),
+  multi: true
+};
 @Component({
   selector: 'app-number',
   templateUrl: './number.component.html',
-  styleUrls: ['./number.component.css']
+  styleUrls: ['./number.component.css'],
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class NumberComponent implements OnInit {
-
+export class NumberComponent implements OnInit, ControlValueAccessor {
   @Input() required = false;
   @Input() searchField;
-  @Input() phoneNumber = '';
   @Input() defaultCountryCode = '';
   @Input() preferredCountryCodes: string[] = [];
   @Input() placeholder = '';
+  @Input() outputFormat: OutputFormat = OutputFormat.international;
+  @Input() widthDropdown = '15%';
+  @Input() widthInput = '20%';
+  @Input() height = '30px';
   @Output() state = new EventEmitter();
   @Output() inputError = new EventEmitter<{ errorCode: number; message: string }>();
+
 
   inputErrors: { errorCode: number; message: string }[] = [
     { errorCode: 0, message: 'phone number is required' },
@@ -34,6 +44,13 @@ export class NumberComponent implements OnInit {
     dialCode: '',
     countryCode: ''
   };
+
+  // The internal data model
+  private innerValue: any = '';
+  // Placeholders for the callbacks which are later provided
+  // by the Control Value Accessor
+  private onTouchedCallback: () => void = () => { };
+  private onChangeCallback: (_: any) => void = () => { };
 
   constructor(private countryService: CountryService, private numberService: NumberService) { }
 
@@ -143,7 +160,7 @@ export class NumberComponent implements OnInit {
     if (phoneState.regionCode !== null) {
       this.selectedCountry = this.countryService.getCountryFromCountryCode(phoneState.regionCode);
       if (phoneState.valid) {
-        this.phoneNumber = phoneState.number.international;
+        this.phoneNumber = this.formatPhoneNumber(phoneState.number);
         if (this.preferredCountryCodes.length > 0) {
           this.updatePreferredCountryCodes(phoneState.regionCode);
         }
@@ -187,6 +204,61 @@ export class NumberComponent implements OnInit {
   removeSpacesAndHyphens(word) {
     return word.replace(/\s|-/g, '');
   }
+
+
+  writeValue(value: any) {
+    if (value !== this.innerValue) {
+      this.innerValue = value;
+    }
+  }
+  registerOnChange(fn: any) {
+    this.onChangeCallback = fn;
+  }
+  registerOnTouched(fn: any) {
+    this.onTouchedCallback = fn;
+  }
+
+
+  // get accessor
+  get phoneNumber(): any {
+    return this.innerValue;
+  }
+
+  // set accessor including call the onchange callback
+  set phoneNumber(v: any) {
+    if (v !== this.innerValue) {
+      this.innerValue = v;
+      this.onChangeCallback(v);
+    }
+  }
+
+  changefn(): void { this.onChangeCallback(this.phoneNumber); }
+
+  onBlur() {
+    this.onTouchedCallback();
+  }
+
+  formatPhoneNumber(phoneStateNumber) {
+    switch (this.outputFormat) {
+      case OutputFormat.e164:
+        return phoneStateNumber.e164;
+
+      case OutputFormat.input:
+        return phoneStateNumber.input;
+
+      case OutputFormat.international:
+        return phoneStateNumber.international;
+
+      case OutputFormat.national:
+        return phoneStateNumber.national;
+
+      case OutputFormat.rfc3966:
+        return phoneStateNumber.rfc3966;
+
+      default:
+        return phoneStateNumber.international;
+    }
+  } 
 
 }
 
