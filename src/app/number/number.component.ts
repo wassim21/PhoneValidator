@@ -3,7 +3,7 @@ import { CountryService } from './services/country.service';
 import { Country } from './models/country.model';
 import { NumberService } from './services/number.service';
 import { SearchField } from './models/searchField.enum';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, Validators } from '@angular/forms';
 import { OutputFormat } from './models/outputFormat.enum';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -23,7 +23,7 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
   @Input() defaultCountryCode = '';
   @Input() preferredCountryCodes: string[] = [];
   @Input() placeholder = '';
-  @Input() outputFormat: OutputFormat = OutputFormat.international;
+  @Input() outputFormat: OutputFormat = OutputFormat.International;
   @Input() widthDropdown = '15%';
   @Input() widthInput = '20%';
   @Input() height = '30px';
@@ -241,24 +241,28 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
 
   formatPhoneNumber(phoneStateNumber) {
     switch (this.outputFormat) {
-      case OutputFormat.e164:
+      case OutputFormat.E164:
         return phoneStateNumber.e164;
 
-      case OutputFormat.input:
+      case OutputFormat.Input:
         return phoneStateNumber.input;
 
-      case OutputFormat.international:
+      case OutputFormat.International:
         return phoneStateNumber.international;
 
-      case OutputFormat.national:
+      case OutputFormat.National:
         return phoneStateNumber.national;
 
-      case OutputFormat.rfc3966:
+      case OutputFormat.Rfc3966:
         return phoneStateNumber.rfc3966;
 
       default:
         return phoneStateNumber.international;
     }
+  }
+
+  getErrorCondition() {
+
   }
 }
 

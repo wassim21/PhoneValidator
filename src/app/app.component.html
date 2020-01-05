@@ -1,4 +1,18 @@
+<p>Exemple 1: basic usage</p>
+<app-number [(ngModel)]="phoneNumber"></app-number>
+<p>{{phoneNumber}}</p>
+<br />
+
+<p>Exemple 2: into form</p>
+<form [formGroup]="form">
+    <app-number formControlName="phoneNumber"></app-number>
+    <p>{{form.value | json  }}</p>
+</form>
+<br />
+
+
+<p>Exemple 1:</p>
 <app-number (state)="getState($event)" [required]="false" (inputError)="getInputError($event)"
-    [placeholder]="'+31881122334'" [searchField]="'all'" [preferredCountryCodes]="preferredCountryCodes" 
-    [outputFormat]="'rfc3966'"></app-number>
-{{inputError.message}} <br />
+    [placeholder]="'+31881122334'" [searchField]="'all'" [preferredCountryCodes]="preferredCountryCodes"
+    [outputFormat]="'rfc3966'">
+</app-number>

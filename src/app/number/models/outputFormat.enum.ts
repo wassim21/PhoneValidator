@@ -1,7 +1,7 @@
 export enum OutputFormat {
-    e164 = 'e164',
-    input = 'input',
-    international = 'international',
-    national = 'national',
-    rfc3966 = 'rfc3966'
+    E164 = 'e164',
+    Input = 'input',
+    International = 'international',
+    National = 'national',
+    Rfc3966 = 'rfc3966'
 }

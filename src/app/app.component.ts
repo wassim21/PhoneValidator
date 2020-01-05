@@ -11,9 +11,10 @@ export class AppComponent implements OnInit {
   title = 'PhoneValidator';
   inputError = '';
   preferredCountryCodes = ['nl', 'fr'];
-  // form = new FormGroup({
-  //   phoneNumber: new FormControl('')
-  // });
+  form = new FormGroup({
+    phoneNumber: new FormControl('')
+  });
+  phoneNumber = '';
   ngOnInit(): void {
   }
 

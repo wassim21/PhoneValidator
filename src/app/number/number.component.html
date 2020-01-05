@@ -2,7 +2,8 @@
     <div class="row fullSize" #dropdown>
         <div [ngStyle]="{width: widthDropdown, height: height}">
             <kendo-dropdownlist [data]="data" [filterable]="true" [textField]="'name'" [valueField]="'countryCode'"
-                [(ngModel)]="selectedCountry" (filterChange)="handleFilter($event)" (valueChange)="updatephoneNumber()" [ngStyle]="{ height: height}" class="fixWidth">
+                [(ngModel)]="selectedCountry" (filterChange)="handleFilter($event)" (valueChange)="updatephoneNumber()"
+                [ngStyle]="{ height: height}" class="fixWidth">
                 <ng-template kendoDropDownListItemTemplate let-dataItem>
                     <span>{{ dataItem.name }}</span> <span style="color: gray;">&nbsp; +{{ dataItem.dialCode }}</span>
                 </ng-template>
@@ -10,8 +11,8 @@
         </div>
         <div [ngStyle]="{width: widthInput, height: height}">
             <input kendoTextBox [(ngModel)]="phoneNumber" (focusout)="verifAndEmit()" (keydown)="keyDown($event)"
-                (keypress)="validateNumber($event)" [placeholder]="placeholder" class="input" (blur)="onBlur()"
-                (change)="changefn()"  [ngStyle]="{ height: height}" class="fixWidth" />
+                (keypress)="validateNumber($event)" [placeholder]="placeholder" class="input fixWidth error"
+                (blur)="onBlur()" (change)="changefn()" [ngStyle]="{ height: height}" />
         </div>
     </div>
 </div>
