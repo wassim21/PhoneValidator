@@ -3,7 +3,7 @@ import { CountryService } from './services/country.service';
 import { Country } from './models/country.model';
 import { NumberService } from './services/number.service';
 import { SearchField } from './models/searchField.enum';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, Validators } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, FormControl } from '@angular/forms';
 import { OutputFormat } from './models/outputFormat.enum';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -11,14 +11,19 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   useExisting: forwardRef(() => NumberComponent),
   multi: true
 };
+export const RequiredValidation: any = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => NumberComponent),
+  multi: true
+};
+
 @Component({
   selector: 'app-number',
   templateUrl: './number.component.html',
   styleUrls: ['./number.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, RequiredValidation]
 })
 export class NumberComponent implements OnInit, ControlValueAccessor {
-  @Input() required = false;
   @Input() searchField;
   @Input() defaultCountryCode = '';
   @Input() preferredCountryCodes: string[] = [];
@@ -29,6 +34,11 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
   @Input() height = '30px';
   @Output() state = new EventEmitter();
   @Output() inputError = new EventEmitter<{ errorCode: number; message: string }>();
+
+  required = false;
+  phoneState = null;
+  phoneInputError = null;
+  isValid = true;
 
 
   inputErrors: { errorCode: number; message: string }[] = [
@@ -47,7 +57,7 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
   };
 
   // The internal data model
-  private innerValue: any = '';
+  private innerValue: string = '';
   // Placeholders for the callbacks which are later provided
   // by the Control Value Accessor
   private onTouchedCallback: () => void = () => { };
@@ -136,40 +146,51 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  verifAndEmit() {
-    this.inputError.emit(null);
+  verif() {
+    this.phoneInputError = null;
+    this.isValid = false;
     if (this.required && this.phoneNumber.length === 0) {
-      this.inputError.emit(this.inputErrors[0]);
+      this.phoneInputError = this.inputErrors[0];
     } else if (this.phoneNumber.length > 0) {
       if (Number(this.removeSpacesAndHyphens(this.phoneNumber))) {
         if (this.phoneNumber.startsWith('+')) {
           const pn = new PhoneNumber(this.phoneNumber);
-          const phoneState = pn.toJSON();
-          this.state.emit(phoneState);
-          this.checkDialCodeAndUpdate(phoneState);
+          this.phoneState = pn.toJSON();
+          this.checkDialCodeAndUpdate(this.phoneState);
         } else {
-          this.inputError.emit(this.inputErrors[1]);
+          this.phoneInputError = this.inputErrors[1];
           this.ResetSelectedCountry();
         }
       } else {
-        this.inputError.emit(this.inputErrors[2]);
+        this.phoneInputError = this.inputErrors[2];
       }
     }
+  }
+
+  emit() {
+    this.inputError.emit(this.phoneInputError);
+    this.state.emit(this.phoneState)
+  }
+
+  verifAndEmit() {
+    this.verif();
+    this.emit();
   }
 
   checkDialCodeAndUpdate(phoneState) {
     if (phoneState.regionCode !== null) {
       this.selectedCountry = this.countryService.getCountryFromCountryCode(phoneState.regionCode);
       if (phoneState.valid) {
+        this.isValid = true;
         this.phoneNumber = this.formatPhoneNumber(phoneState.number);
         if (this.preferredCountryCodes.length > 0) {
           this.updatePreferredCountryCodes(phoneState.regionCode);
         }
       } else {
-        this.inputError.emit(this.inputErrors[2]);
+        this.phoneInputError = this.inputErrors[2];
       }
     } else {
-      this.inputError.emit(this.inputErrors[3]);
+      this.phoneInputError = this.inputErrors[3];
       this.ResetSelectedCountry();
     }
   }
@@ -192,11 +213,11 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
     return this.countryService.getCountries();
   }
 
-  keyDown(event) {
-    if (event.keyCode === 13) {
-      this.verifAndEmit();
-    }
-  }
+  // keyDown(event) {
+  //   if (event.keyCode === 13) {
+  //     this.verifAndEmit();
+  //   }
+  // }
 
   validateNumber(event) {
     return this.numberService.validateNumber(event);
@@ -208,7 +229,7 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
 
 
   writeValue(value: any) {
-    if (value !== this.innerValue) {
+    if (value !== this.innerValue && value != null) {
       this.innerValue = value;
     }
   }
@@ -217,6 +238,20 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
   }
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  validate(c: FormControl) {
+    this.verifAndEmit();
+    if (!this.required && c.errors !== null && c.errors.required === true) {
+      this.required = true;
+    }
+    if (c.value === '' && (c.errors == null || (c.errors !== null && c.errors.required === undefined))) {
+      this.isValid = true;
+      return true;
+    }
+    return !this.isValid && {
+      invalid: true
+    };
   }
 
 
@@ -261,9 +296,6 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  getErrorCondition() {
-
-  }
 }
 
 export const PhoneNumber = require('awesome-phonenumber');

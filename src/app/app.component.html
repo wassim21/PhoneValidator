@@ -1,18 +1,44 @@
 <p>Exemple 1: basic usage</p>
-<app-number [(ngModel)]="phoneNumber"></app-number>
-<p>{{phoneNumber}}</p>
+<app-number [(ngModel)]="phoneNumber1" [placeholder]="'+31881122334'"></app-number>
+<p>{{phoneNumber1}}</p>
 <br />
 
-<p>Exemple 2: into form</p>
-<form [formGroup]="form">
+<p>Exemple 2: basic usage with outputFormat</p>
+<app-number [(ngModel)]="phoneNumber2" [outputFormat]="'rfc3966'"></app-number>
+<p>{{phoneNumber2}}</p>
+<br />
+
+<p>Exemple 3: into form</p>
+<form [formGroup]="form1">
     <app-number formControlName="phoneNumber"></app-number>
-    <p>{{form.value | json  }}</p>
+    <p>{{form1.value | json  }}</p>
+    <p>valid: {{form1.valid}}</p>
 </form>
 <br />
 
+<p>Exemple 4: into form with required phoneNumber and custom Error message and json output</p>
+<form [formGroup]="form2">
+    <app-number formControlName="phoneNumber" (state)="getState($event)" (inputError)="getInputError($event)">
+    </app-number>
+    <p>{{form2.value | json  }}</p>
+    <p>valid: {{form2.valid}}</p>
+    <p>custom message: {{inputError | json}}</p>
+</form>
+<br />
 
-<p>Exemple 1:</p>
+<p>Exemple 5: preferredCountryCodes and defaultCountryCode</p>
+<app-number [(ngModel)]="phoneNumber3" [preferredCountryCodes]="preferredCountryCodes" [defaultCountryCode]="'tn'"></app-number>
+<p>{{phoneNumber3}}</p>
+<br />
+
+<p>Exemple 5: style fix</p>
+<app-number [widthDropdown]="'20%'" [widthInput]="'20%'" [height]="'35px'"></app-number>
+<br />
+
+
+
+<!-- <p>Exemple 1:</p>
 <app-number (state)="getState($event)" [required]="false" (inputError)="getInputError($event)"
     [placeholder]="'+31881122334'" [searchField]="'all'" [preferredCountryCodes]="preferredCountryCodes"
     [outputFormat]="'rfc3966'">
-</app-number>
+</app-number> -->

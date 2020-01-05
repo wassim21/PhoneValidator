@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +11,14 @@ export class AppComponent implements OnInit {
   title = 'PhoneValidator';
   inputError = '';
   preferredCountryCodes = ['nl', 'fr'];
-  form = new FormGroup({
+  form1 = new FormGroup({
     phoneNumber: new FormControl('')
   });
-  phoneNumber = '';
+  form2 = new FormGroup({
+    phoneNumber: new FormControl('', Validators.required)
+  });
+  phoneNumber1 = '';
+  phoneNumber2 = '';
   ngOnInit(): void {
   }
 

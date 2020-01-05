@@ -10,9 +10,9 @@
             </kendo-dropdownlist>
         </div>
         <div [ngStyle]="{width: widthInput, height: height}">
-            <input kendoTextBox [(ngModel)]="phoneNumber" (focusout)="verifAndEmit()" (keydown)="keyDown($event)"
-                (keypress)="validateNumber($event)" [placeholder]="placeholder" class="input fixWidth error"
-                (blur)="onBlur()" (change)="changefn()" [ngStyle]="{ height: height}" />
+            <input kendoTextBox [(ngModel)]="phoneNumber" (focusout)="emit()" (keypress)="validateNumber($event)"
+                [placeholder]="placeholder" class="input fixWidth error" (blur)="onBlur()" (change)="changefn()"
+                [ngStyle]="{ height: height}" />
         </div>
     </div>
 </div>
