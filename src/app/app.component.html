@@ -8,9 +8,9 @@
 <p>{{phoneNumber2}}</p>
 <br />
 
-<p>Exemple 3: into form</p>
+<p>Exemple 3: into form and search with country Code</p>
 <form [formGroup]="form1">
-    <app-number formControlName="phoneNumber"></app-number>
+    <app-number formControlName="phoneNumber" [searchField]="'all'"></app-number>
     <p>{{form1.value | json  }}</p>
     <p>valid: {{form1.valid}}</p>
 </form>

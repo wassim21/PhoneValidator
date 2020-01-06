@@ -3,8 +3,14 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-
+/**
+ * helper that allow to type specific caracters
+ */
 export class NumberService {
+    /**
+     * allow only numbers, space, + , -
+     * @param event
+     */
     validateNumber(event): boolean {
         let valid = true;
         const charCode = (event.which) ? event.which : event.keyCode;
