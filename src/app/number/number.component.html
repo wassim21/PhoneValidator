@@ -3,7 +3,7 @@
         <div [ngStyle]="{width: widthDropdown, height: height}">
             <kendo-dropdownlist [data]="data" [filterable]="true" [textField]="'name'" [valueField]="'countryCode'"
                 [(ngModel)]="selectedCountry" (filterChange)="handleFilter($event)" (valueChange)="updatephoneNumber()"
-                [ngStyle]="{ height: height}" class="fixWidth">
+                [ngStyle]="{ height: height}" class="fullWidth">
                 <ng-template kendoDropDownListItemTemplate let-dataItem>
                     <span>{{ dataItem.name }}</span> <span style="color: gray;">&nbsp; +{{ dataItem.dialCode }}</span>
                 </ng-template>
@@ -11,8 +11,8 @@
         </div>
         <div [ngStyle]="{width: widthInput, height: height}">
             <input [(ngModel)]="phoneNumber" (focusout)="emit()" (keypress)="validateNumber($event)"
-                [placeholder]="placeholder" class="input fixWidth" (blur)="onBlur()" (change)="changefn()"
-                [ngStyle]="{ height: height}"/>
+                [placeholder]="placeholder" class="fullWidth fixInput" (blur)="onBlur()" (change)="changefn()"
+                [ngStyle]="{ height: height}" [ngClass]="{'error': !isValid && phoneNumber.length>0 }"/>
         </div>
     </div>
 </div>

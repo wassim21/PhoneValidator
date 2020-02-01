@@ -17,12 +17,14 @@ export class AppComponent implements OnInit {
   form2 = new FormGroup({
     phoneNumber: new FormControl('', Validators.required)
   });
-  phoneNumber1 = '';
+  phoneNumber1 = '+21621313562';
   phoneNumber2 = '';
+  state ;
   ngOnInit(): void {
   }
 
   getState(json) {
+    this.state = json;
     console.log(json);
   }
 

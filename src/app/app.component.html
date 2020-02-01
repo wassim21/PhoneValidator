@@ -10,7 +10,7 @@
 
 <p>Exemple 3: into form and search with country Code</p>
 <form [formGroup]="form1">
-    <app-number formControlName="phoneNumber" [searchField]="'all'"></app-number>
+    <app-number formControlName="phoneNumber" [searchField]="'countryCode'"></app-number>
     <p>{{form1.value | json  }}</p>
     <p>valid: {{form1.valid}}</p>
 </form>
@@ -22,6 +22,7 @@
     </app-number>
     <p>{{form2.value | json  }}</p>
     <p>valid: {{form2.valid}}</p>
+    <p>state: {{state | json  }}</p>
     <p>custom message: {{inputError | json}}</p>
 </form>
 <br />
@@ -32,7 +33,7 @@
 <br />
 
 <p>Exemple 5: style fix</p>
-<app-number [widthDropdown]="'20%'" [widthInput]="'20%'" [height]="'35px'"></app-number>
+<app-number [(ngModel)]="phoneNumber4" [widthDropdown]="'20%'" [widthInput]="'20%'" [height]="'35px'"></app-number >
 <br />
 
 

@@ -245,9 +245,10 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
     if (this.required && this.phoneNumber.length === 0) {
       this.phoneInputError = this.inputErrors[0];
     } else if (this.phoneNumber.length > 0) {
-      if (Number(this.removeSpacesAndHyphens(this.phoneNumber))) {
-        if (this.phoneNumber.startsWith('+')) {
-          const pn = new PhoneNumber(this.phoneNumber);
+      const numberphone = this.removeSpacesAndHyphens(this.phoneNumber);
+      if (Number(numberphone)) {
+        if (numberphone.startsWith('+')) {
+          const pn = new PhoneNumber(numberphone);
           this.phoneState = pn.toJSON();
           this.checkDialCodeAndUpdate(this.phoneState);
         } else {
@@ -322,7 +323,7 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
    * @param word
    */
   removeSpacesAndHyphens(word) {
-    return word.replace(/\s|-/g, '');
+    return word.replace(/\s|-|:|\w[tel]\w/g, '');
   }
 
   /**
