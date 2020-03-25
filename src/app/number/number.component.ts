@@ -26,7 +26,7 @@ export const RequiredValidation: any = {
 @Component({
   selector: 'app-number',
   templateUrl: './number.component.html',
-  styleUrls: ['./number.component.css'],
+  styleUrls: ['./number.component.css', '../../assets/css/flags.min.css'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, RequiredValidation]
 })
 export class NumberComponent implements OnInit, ControlValueAccessor {
@@ -260,6 +260,7 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
       }
     }
   }
+  
 
   /**
    * emit to parent component

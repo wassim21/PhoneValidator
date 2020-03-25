@@ -5,6 +5,7 @@
                 [(ngModel)]="selectedCountry" (filterChange)="handleFilter($event)" (valueChange)="updatephoneNumber()"
                 [ngStyle]="{ height: height}" class="fullWidth">
                 <ng-template kendoDropDownListItemTemplate let-dataItem>
+                     <span [class]="'flag flag-' + dataItem.countryCode"></span> &nbsp;
                     <span>{{ dataItem.name }}</span> <span style="color: gray;">&nbsp; +{{ dataItem.dialCode }}</span>
                 </ng-template>
             </kendo-dropdownlist>
