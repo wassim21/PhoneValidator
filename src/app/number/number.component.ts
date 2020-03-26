@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, forwardRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, forwardRef, ViewChild, ElementRef } from '@angular/core';
 import { CountryService } from './services/country.service';
 import { Country } from './models/country.model';
 import { NumberService } from './services/number.service';
@@ -30,6 +30,8 @@ export const RequiredValidation: any = {
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, RequiredValidation]
 })
 export class NumberComponent implements OnInit, ControlValueAccessor {
+  @ViewChild('phoneNumberInput', { static: false }) phoneNumberInput: ElementRef;
+  @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
   /**
    * search with dialCode or countryCode or name or all of them
    */
@@ -50,10 +52,6 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
    * format of phone number after validation
    */
   @Input() outputFormat: OutputFormat = OutputFormat.International;
-  /**
-   * width of dropdown
-   */
-  @Input() widthDropdown = '15%';
   /**
    * width of input
    */
@@ -89,6 +87,8 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
     { errorCode: 2, message: 'phone number is invalid' },
     { errorCode: 3, message: 'dial code is undefined' },
   ];
+  showDropdown = false;
+  userInput: string;
   /**
    * list of countries
    */
@@ -131,12 +131,34 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
     });
   }
 
+  displayDropDown() {
+    if (!this.showDropdown) {
+      this.showDropdown = true;
+      setTimeout(() => this.searchInput.nativeElement.focus());
+      return;
+    }
+    this.showDropdown = false;
+  }
+
+  onClickedOutside() {
+    this.showDropdown = false;
+  }
+
+  updateSelectedCountry(event: Event, country: Country) {
+    event.preventDefault();
+    this.selectedCountry = country;
+    // focus on phone number input field
+    this.showDropdown = false;
+    this.updatephoneNumber();
+    setTimeout(() => this.phoneNumberInput.nativeElement.focus());
+  }
+
   /**
    * filter the list of countries
    * @param value search string
    */
-  handleFilter(value: string) {
-    this.data = this.searchData(value);
+  handleFilter() {
+    this.data = this.searchData(this.userInput);
   }
 
   /**

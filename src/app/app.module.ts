@@ -14,6 +14,7 @@ import { NumberService } from './number/services/number.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ClickOutsideModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

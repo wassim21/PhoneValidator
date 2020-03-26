@@ -1,10 +1,9 @@
-<p>Exemple 1: basic usage nd search with country name</p>
-<app-number [(ngModel)]="phoneNumber1" [placeholder]="'+31881122334'" [searchField]="'name'"></app-number>
-<p>{{phoneNumber1}}</p>
+<p>Exemple 1: basic usage and search with country name</p>
+<app-number [(ngModel)]="phoneNumber1" [searchField]="'name'"></app-number>
 <br />
 
 <p>Exemple 2: basic usage with outputFormat</p>
-<app-number [(ngModel)]="phoneNumber2" [outputFormat]="'rfc3966'"></app-number>
+<app-number [(ngModel)]="phoneNumber2" [placeholder]="'+31881122334'" [outputFormat]="'rfc3966'"></app-number>
 <p>{{phoneNumber2}}</p>
 <br />
 
@@ -32,8 +31,8 @@
 <p>{{phoneNumber3}}</p>
 <br />
 
-<p>Exemple 5: style fix</p>
-<app-number [(ngModel)]="phoneNumber4" [widthDropdown]="'20%'" [widthInput]="'20%'" [height]="'35px'"></app-number >
+<p>Exemple 5: width change</p>
+<app-number [(ngModel)]="phoneNumber4"  [widthInput]="'40%'" [height]="'35px'"></app-number >
 <br />
 
 
