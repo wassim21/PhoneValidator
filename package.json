@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
     "@angular/router": "~8.2.0",
+    "@ngx-translate/core": "^12.1.2",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@progress/kendo-angular-common": "^1.0.0",
     "@progress/kendo-angular-dropdowns": "^4.2.3",
     "@progress/kendo-angular-l10n": "^2.0.0",

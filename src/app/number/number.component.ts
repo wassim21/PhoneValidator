@@ -122,11 +122,13 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
    * on init
    */
   ngOnInit() {
-    this.countries = this.getCountries();
-    this.data = this.countries;
-    this.updatePreferredCountryCodes(this.defaultCountryCode);
-    this.updateselectedCountryWithDefault();
-    this.verifAndEmit();
+    this.countryService.getCountries().subscribe(countries => {
+      this.countries = countries;
+      this.data = countries;
+      this.updatePreferredCountryCodes(this.defaultCountryCode);
+      this.updateselectedCountryWithDefault();
+      this.verifAndEmit();
+    });
   }
 
   /**
@@ -260,7 +262,7 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
       }
     }
   }
-  
+
 
   /**
    * emit to parent component
@@ -305,10 +307,6 @@ export class NumberComponent implements OnInit, ControlValueAccessor {
   updatephoneNumber() {
     this.phoneNumber = '+' + this.selectedCountry.dialCode + ' ';
     this.verifAndEmit();
-  }
-
-  getCountries() {
-    return this.countryService.getCountries();
   }
 
   /**

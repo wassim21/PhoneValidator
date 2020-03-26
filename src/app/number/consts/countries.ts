@@ -1,5 +1,6 @@
+import { Country } from '../models/country.model';
 
-export const countries = [
+export const countries: Country[] = [
     {
         name: '',
         dialCode: '61',
