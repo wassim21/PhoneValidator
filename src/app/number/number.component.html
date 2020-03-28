@@ -1,33 +1,26 @@
-<div class="container fullSize">
-    <div class="row fullSize" #dropdown>
-        <div [ngStyle]="{ height: height}">
-            <span class="input-group-addon flagInput">
-                <div class="dropdown"  (clickOutside)="onClickedOutside()">
-                    <button type="button" class="dropbtn btn" (click)="displayDropDown()" >
-                        <span [class]="'flag flag-' + selectedCountry.countryCode" *ngIf="selectedCountry"></span>
-                        <span class="defaultCountry" *ngIf="!selectedCountry"></span>
-                        <span class="arrow-down"></span>
-                    </button>
-                    <div class="dropdown-content" *ngIf="showDropdown">
-                        <input (input)="handleFilter()" [(ngModel)]="userInput" #searchInput> 
-                        <div class="list-group scrollable-menu">
-                            <a href="#" class="list-group-item"
-                                *ngFor="let country of data"
-                                (click)="updateSelectedCountry($event, country)"
-                                >
-                                <span [class]="'flag flag-' + country.countryCode"></span>
-                                <span class="country-name">{{ country.name }} <span class="dial-code">+
-                                        {{ country.dialCode}}</span></span>
-                            </a>
-                        </div>
-                    </div>
+<div [ngStyle]="{ height: height}">
+    <span class="input-group-addon flagInput">
+        <div class="dropdown" (clickOutside)="onClickedOutside()">
+            <button type="button" class="dropbtn btn" (click)="displayDropDown()">
+                <span [class]="'flag flag-' + selectedCountry.countryCode" *ngIf="selectedCountry"></span>
+                <span class="defaultCountry" *ngIf="!selectedCountry"></span>
+                <span class="arrow-down"></span>
+            </button>
+            <div class="dropdown-content" *ngIf="showDropdown">
+                <input (input)="handleFilter()" [(ngModel)]="userInput" #searchInput>
+                <div class="list-group scrollable-menu">
+                    <a href="#" class="list-group-item" *ngFor="let country of data"
+                        (click)="updateSelectedCountry($event, country)">
+                        <span [class]="'flag flag-' + country.countryCode"></span>
+                        <span class="country-name">{{ country.name }} <span class="dial-code">+
+                                {{ country.dialCode}}</span></span>
+                    </a>
                 </div>
-            </span>
+            </div>
         </div>
-        <div [ngStyle]="{width: widthInput, height: height}">
-            <input [(ngModel)]="phoneNumber" (focusout)="emit()" (keypress)="validateNumber($event)"
-                [placeholder]="placeholder" class="fullWidth fixInput" (blur)="onBlur()" (change)="changefn()"
-                [ngStyle]="{ height: height}" [ngClass]="{'error': !isValid && phoneNumber.length>0 }"  #phoneNumberInput/>
-        </div>
-    </div>
+    </span>
+    <input [(ngModel)]="phoneNumber" (focusout)="emit()" (keypress)="validateNumber($event)" [placeholder]="placeholder"
+        class="fullWidth fixInput" (blur)="onBlur()" (change)="changefn()"
+        [ngStyle]="{width: widthInput, height: height}" [ngClass]="{'error': !isValid && phoneNumber.length>0 }"
+        #phoneNumberInput />
 </div>
