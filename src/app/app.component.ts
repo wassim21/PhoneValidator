@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   form2 = new FormGroup({
     phoneNumber: new FormControl('', Validators.required)
   });
-  phoneNumber1 = '+21621313562';
+  phoneNumber1 = '+21620000000';
   phoneNumber2 = '';
   phoneNumber3 = '';
   phoneNumber4 = '';

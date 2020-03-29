@@ -1,9 +1,12 @@
 # w-phone-validator
 
 A simple phone validator. Allows you to check a phone number and give some details.
+
 Exemples of usage are provided in https://github.com/wassim21/PhoneValidator/blob/master/src/app/app.component.html.
+
 We used awesome-phonenumber as library to validate phone number provided in https://github.com/grantila/awesome-phonenumber
-This phone validator is multilingual. We provide for an english version of list of countries.
+
+This phone validator is multilingual. We provide for now an english version of list of countries.
 
 ## Installation
 
@@ -15,7 +18,8 @@ $ npm i w-phone-validator
 
 ## Third Parties
 
-This library uses as third party ngx-transalate provided in https://github.com/ngx-translate/core
+This library uses as third party ngx-transalate provided in https://github.com/ngx-translate/core.
+
 To install this library, run:
 
 ```bash
@@ -89,9 +93,9 @@ We need also to add "node" in types section in tsconfig.app.json
 }
 
 ```
-under assets add new folder called countries and under that folder add en.json that contain the english version of countries provided in https://github.com/wassim21/PhoneValidator/blob/master/src/assets/countries/en.json
+under assets add new folder called "countries" and under that folder add en.json that contain the english version of countries provided in https://github.com/wassim21/PhoneValidator/blob/master/src/assets/countries/en.json
 
-Also, under assets add a folder called i18n and under that folder add a new json file (if dosen't exist already) called en.json. This will contain all the translation of your future app. For more details, you can visit https://github.com/ngx-translate/core
+Also, under assets add a folder called "i18n" and under that folder add a new json file (if dosen't exist already) called en.json. This will contain all the translation of your future app. For more details, you can visit https://github.com/ngx-translate/core
 
 Once this configuration is done, you can use `w-phone-validator`:
 
@@ -110,6 +114,7 @@ Those attributes are optionnal inputs:
        defaultCountryCode: display the default country by setting the defaultCountryCode with a choosen country code. The list of countries is provided in the english json file.
 
        preferredCountryCodes: the list of preferred Country Codes. exemple: preferredCountryCodes="['tn', 'nl']", etc..
+
        placeholder: the placeholder of the input
 
        outputFormat: format of phone number after validation. Possible output format are input (written by the user) -  e164 - international - national - rfc3966. For more details visit https://github.com/grantila/awesome-phonenumber
