@@ -10,19 +10,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CountryService {
-  // to fill in when a new language is added
-  supportedLanguages = ['en'];
 
   constructor(private translate: TranslateService, private Http: HttpClient) { }
 
   /**
    * Returns the countries
    */
-  public getCountries(): Observable<Country[]> {
+  public getCountries(language = null, supportedLanguages = ['en']): Observable<Country[]> {
     // get the language in the application, if it's not supported, we choose english
-    let lang = this.translate.getDefaultLang();
-    if (!this.supportedLanguages.find(x => x === lang)) {
-      lang = 'en';
+    let lang;
+    if (language != null) {
+      lang = language;
+    } else {
+      lang = this.translate.getDefaultLang();
+      if (!supportedLanguages.find(x => x === lang)) {
+        lang = 'en';
+      }
     }
     // let get the locale based country names
     return this.Http.get('./assets/countries/' + lang + '.json').pipe(map(countriesNames => {

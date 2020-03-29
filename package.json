@@ -1,6 +1,6 @@
 {
-  "name": "custom-phone-validator",
-  "version": "1.1.5",
+  "name": "w-phone-validator",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -57,15 +57,19 @@
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
   },
-  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.",
   "main": "public_api.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://wassimmhiri@dev.azure.com/wassimmhiri/Phone%20Number%20Verification/_git/Phone%20Number%20Verification"
-  },
   "keywords": [
     "angular"
   ],
   "author": "wassim mhiri",
-  "license": "ISC"
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wassim21/PhoneValidator.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wassim21/PhoneValidator/issues"
+  },
+  "homepage": "https://github.com/wassim21/PhoneValidator#readme"
 }

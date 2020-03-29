@@ -62,6 +62,14 @@ export class PhoneValdiatorComponent implements OnInit, ControlValueAccessor {
    */
   @Input() height = '30px';
   /**
+   * the language of countries in dropdown
+   */
+  @Input() language = null;
+  /**
+   * the list of supported languges
+   */
+  @Input() supportedLanguages;
+  /**
    * outputs the state of phone number
    */
   @Output() state = new EventEmitter();
