@@ -1,15 +1,16 @@
 {
-  "name": "phone-validator",
-  "version": "0.0.0",
+  "name": "custom-phone-validator",
+  "version": "1.1.5",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "packagr": "ng-packagr -p ng-package.json"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~8.2.0",
     "@angular/common": "~8.2.0",
@@ -50,9 +51,21 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
+    "ng-packagr": "^9.1.0",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.",
+  "main": "public_api.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://wassimmhiri@dev.azure.com/wassimmhiri/Phone%20Number%20Verification/_git/Phone%20Number%20Verification"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "author": "wassim mhiri",
+  "license": "ISC"
 }

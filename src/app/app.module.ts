@@ -1,35 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NumberComponent } from './number/number.component';
-import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import 'hammerjs';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CountryService } from './number/services/country.service';
-import { NumberService } from './number/services/number.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { ClickOutsideModule } from 'ng-click-outside';
+import { HttpClient } from '@angular/common/http';
+import { NumberModule } from './number/number.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NumberComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    DropDownsModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    ClickOutsideModule,
+    NumberModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -38,7 +27,6 @@ import { ClickOutsideModule } from 'ng-click-outside';
       }
     }),
   ],
-  providers: [CountryService, NumberService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
