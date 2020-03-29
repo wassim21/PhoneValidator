@@ -104,23 +104,35 @@ Once this configuration is done, you can use `w-phone-validator`:
 ### Attributes/Options:
 
 Those attributes are optionnal inputs:
+
        searchField: search based on search field. Possible search Field are: dialCode - countryCode - name - all. Per default it's setted to all.
+
        defaultCountryCode: display the default country by setting the defaultCountryCode with a choosen country code. The list of countries is provided in the english json file.
+
        preferredCountryCodes: the list of preferred Country Codes. exemple: preferredCountryCodes="['tn', 'nl']", etc..
        placeholder: the placeholder of the input
+
        outputFormat: format of phone number after validation. Possible output format are input (written by the user) -  e164 - international - national - rfc3966. For more details visit https://github.com/grantila/awesome-phonenumber
+
        widthInput: the width of the input.
-       height: height of dropdown and input
+
+       height: height of dropdown and input.
+
        language: the language of countries in dropdown.When the languge is provided the system display the values of the selected langugage. This languge must be provided under assets/countries with lang.json like en.json or fr.json, etc... .When no language is provided the system display the countries with the browser language which must must be provided in supportedLanguages. Exemple: [language]="'en'".
+
        supportedLanguages: is optionnal, but when the language is not provided it becomes mandatory. exmple: supportedLanguages=['en']
 
 Those attributes are optionnal outputs:
+
        state: provide a short description of the phone number written by the user for instance: valid or invalid, fixe or mobile, etc...
+
        inputError: a custom message to describe the user input. Exemple: "phone number must contain + before dial code"
 
 
 ## Troubleshooting:
+
 If you are getting error "Can't resolve 'awesome-phonenumber'" while building with aot, try to install awesome-phonenumber. Run npm install npm i awesome-phonenumber.
+
 For the other issues you can report them in https://github.com/wassim21/PhoneValidator/issues
 
 
