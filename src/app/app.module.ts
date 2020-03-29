@@ -5,9 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { NumberModule } from './number/number.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { PhoneValidatorModule } from './phone-validator/phone-validator.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    NumberModule,
+    PhoneValidatorModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

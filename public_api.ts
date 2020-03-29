@@ -1,1 +1,1 @@
-export * from './src/app/number/number.module';
+export * from './src/app/phone-validator/phone-validator.module'

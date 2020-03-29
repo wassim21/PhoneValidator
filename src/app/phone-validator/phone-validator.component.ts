@@ -11,7 +11,7 @@ import { OutputFormat } from './models/outputFormat.enum';
  */
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NumberComponent),
+  useExisting: forwardRef(() => PhoneValdiatorComponent),
   multi: true
 };
 /**
@@ -19,17 +19,18 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
  */
 export const RequiredValidation: any = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => NumberComponent),
+  useExisting: forwardRef(() => PhoneValdiatorComponent),
   multi: true
 };
 
 @Component({
-  selector: 'app-number',
-  templateUrl: './number.component.html',
-  styleUrls: ['./number.component.css', '../../assets/css/flags.min.css'],
+  // tslint:disable-next-line: component-selector
+  selector: 'phone-validator',
+  templateUrl: './phone-validator.component.html',
+  styleUrls: ['./phone-validator.component.css', '../../assets/css/flags.min.css'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, RequiredValidation]
 })
-export class NumberComponent implements OnInit, ControlValueAccessor {
+export class PhoneValdiatorComponent implements OnInit, ControlValueAccessor {
   @ViewChild('phoneNumberInput', { static: false }) phoneNumberInput: ElementRef;
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
   /**

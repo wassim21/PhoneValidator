@@ -1,15 +1,15 @@
 <p>Exemple 1: basic usage and search with country name</p>
-<app-number [(ngModel)]="phoneNumber1" [searchField]="'name'"></app-number>
+<phone-validator [(ngModel)]="phoneNumber1" [searchField]="'name'"></phone-validator>
 <br />
 
 <p>Exemple 2: basic usage with outputFormat</p>
-<app-number [(ngModel)]="phoneNumber2" [placeholder]="'+31881122334'" [outputFormat]="'rfc3966'"></app-number>
+<phone-validator [(ngModel)]="phoneNumber2" [placeholder]="'+31881122334'" [outputFormat]="'rfc3966'"></phone-validator>
 <p>{{phoneNumber2}}</p>
 <br />
 
 <p>Exemple 3: into form and search with country Code</p>
 <form [formGroup]="form1">
-    <app-number formControlName="phoneNumber" [searchField]="'countryCode'"></app-number>
+    <phone-validator formControlName="phoneNumber" [searchField]="'countryCode'"></phone-validator>
     <p>{{form1.value | json  }}</p>
     <p>valid: {{form1.valid}}</p>
 </form>
@@ -17,8 +17,8 @@
 
 <p>Exemple 4: into form with required phoneNumber and custom Error message and json output</p>
 <form [formGroup]="form2">
-    <app-number formControlName="phoneNumber" (state)="getState($event)" (inputError)="getInputError($event)">
-    </app-number>
+    <phone-validator formControlName="phoneNumber" (state)="getState($event)" (inputError)="getInputError($event)">
+    </phone-validator>
     <p>{{form2.value | json  }}</p>
     <p>valid: {{form2.valid}}</p>
     <p>state: {{state | json  }}</p>
@@ -27,12 +27,12 @@
 <br />
 
 <p>Exemple 5: preferredCountryCodes and defaultCountryCode</p>
-<app-number [(ngModel)]="phoneNumber3" [preferredCountryCodes]="preferredCountryCodes" [defaultCountryCode]="'tn'"></app-number>
+<phone-validator [(ngModel)]="phoneNumber3" [preferredCountryCodes]="preferredCountryCodes" [defaultCountryCode]="'tn'"></phone-validator>
 <p>{{phoneNumber3}}</p>
 <br />
 
 <p>Exemple 5: width change</p>
-<app-number [(ngModel)]="phoneNumber4"  [widthInput]="'40%'" [height]="'35px'"></app-number >
+<phone-validator [(ngModel)]="phoneNumber4"  [widthInput]="'40%'" [height]="'35px'"></phone-validator >
 <br />
 
 

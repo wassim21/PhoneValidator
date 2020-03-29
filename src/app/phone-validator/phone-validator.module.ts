@@ -4,13 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { CountryService } from './services/country.service';
 import { NumberService } from './services/number.service';
-import { NumberComponent } from './number.component';
+import { PhoneValdiatorComponent } from './phone-validator.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [NumberComponent],
+  declarations: [PhoneValdiatorComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -18,7 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [NumberComponent],
+  exports: [PhoneValdiatorComponent],
   providers: [CountryService, NumberService],
 })
-export class NumberModule { }
+export class PhoneValidatorModule { }
