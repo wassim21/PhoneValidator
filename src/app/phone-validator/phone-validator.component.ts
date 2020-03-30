@@ -66,10 +66,6 @@ export class PhoneValdiatorComponent implements OnInit, ControlValueAccessor {
    */
   @Input() language = null;
   /**
-   * the list of supported languges
-   */
-  @Input() supportedLanguages;
-  /**
    * outputs the state of phone number
    */
   @Output() state = new EventEmitter();
@@ -131,7 +127,7 @@ export class PhoneValdiatorComponent implements OnInit, ControlValueAccessor {
    * on init
    */
   ngOnInit() {
-    this.countryService.getCountries().subscribe(countries => {
+    this.countryService.getCountries(this.language).subscribe(countries => {
       this.countries = countries;
       this.data = countries;
       this.updatePreferredCountryCodes(this.defaultCountryCode);
@@ -188,7 +184,7 @@ export class PhoneValdiatorComponent implements OnInit, ControlValueAccessor {
    */
   updateselectedCountryWithDefault() {
     if (this.defaultCountryCode.length > 0) {
-      const country = this.countryService.getCountryFromCountryCode(this.defaultCountryCode);
+      const country = this.countryService.getCountryFromCountryCode(this.defaultCountryCode, this.countries);
       if (country !== null) {
         this.selectedCountry = country;
       }
@@ -310,7 +306,7 @@ export class PhoneValdiatorComponent implements OnInit, ControlValueAccessor {
 
   checkDialCodeAndUpdate(phoneState) {
     if (phoneState.regionCode !== null) {
-      this.selectedCountry = this.countryService.getCountryFromCountryCode(phoneState.regionCode);
+      this.selectedCountry = this.countryService.getCountryFromCountryCode(phoneState.regionCode, this.countries);
       if (phoneState.valid) {
         this.isValid = true;
         this.phoneNumber = this.formatPhoneNumber(phoneState.number);

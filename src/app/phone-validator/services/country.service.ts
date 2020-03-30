@@ -1,63 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Country } from '../models/country.model';
 import { countries } from '../consts/countries';
-import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
 
-  constructor(private translate: TranslateService, private Http: HttpClient) { }
-
+  constructor(private Http: HttpClient) { }
   /**
    * Returns the countries
    */
-  public getCountries(language = null, supportedLanguages = ['en']): Observable<Country[]> {
+  public getCountries(language = null): Observable<Country[]> {
+    const countryList = [];
     // get the language in the application, if it's not supported, we choose english
-    let lang;
+    let lang = 'en';
     if (language != null) {
       lang = language;
-    } else {
-      lang = this.translate.getDefaultLang();
-      if (!supportedLanguages.find(x => x === lang)) {
-        lang = 'en';
-      }
     }
     // let get the locale based country names
     return this.Http.get('./assets/countries/' + lang + '.json').pipe(map(countriesNames => {
       countries.forEach((country: Country) => {
-        country.name = countriesNames[country.countryCode]
-          .toLowerCase()
-          .replace(/\b(\w)/g, s => s.toUpperCase());
+        const countryName = countriesNames[country.countryCode];
+        if (countryName) {
+          country.name = countriesNames[country.countryCode]
+            .toLowerCase()
+            .replace(/\b(\w)/g, s => s.toUpperCase());
+
+          countryList.push(country);
+        }
       });
-      return countries;
+      return countryList;
     }));
-
-  }
-
-
-  /**
-   * search country with Dial Code
-   * @param dialCode
-   */
-  getCountryFromDialCode(dialCode: string) {
-    const filteredCountries = countries.filter(country => country.dialCode === dialCode);
-    if (filteredCountries.length > 0) {
-      return filteredCountries[0];
-    }
-    return null;
   }
 
   /**
    * search country with country code
    * @param countryCode
    */
-  getCountryFromCountryCode(countryCode: string) {
-    const filteredCountries = countries.filter(country => country.countryCode.toLowerCase() === countryCode.toLowerCase());
+  getCountryFromCountryCode(countryCode, countryList) {
+    const filteredCountries = countryList.filter(country => country.countryCode.toLowerCase() === countryCode.toLowerCase());
     if (filteredCountries.length > 0) {
       return filteredCountries[0];
     }

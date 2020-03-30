@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   phoneNumber2 = '';
   phoneNumber3 = '';
   phoneNumber4 = '';
+  phoneNumber5 = '';
   state ;
   ngOnInit(): void {
   }

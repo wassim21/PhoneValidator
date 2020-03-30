@@ -123,9 +123,7 @@ Those attributes are optionnal inputs:
 
        height: height of dropdown and input.
 
-       language: the language of countries in dropdown.When the languge is provided the system display the values of the selected langugage. This languge must be provided under assets/countries with lang.json like en.json or fr.json, etc... .When no language is provided the system display the countries with the browser language which must must be provided in supportedLanguages. Exemple: [language]="'en'".
-
-       supportedLanguages: is optionnal, but when the language is not provided it becomes mandatory. exmple: supportedLanguages=['en']
+       language: the language of countries in dropdown. When the languge is provided the system display the values of the selected langugage. This languge must be provided under assets/countries with lang.json like en.json or fr.json, etc... .When no language is provided the system display the english version. Exemple: [language]="'fr'".
 
 Those attributes are optionnal outputs:
 
