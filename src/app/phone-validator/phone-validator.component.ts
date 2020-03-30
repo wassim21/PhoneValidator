@@ -27,7 +27,7 @@ export const RequiredValidation: any = {
   // tslint:disable-next-line: component-selector
   selector: 'phone-validator',
   templateUrl: './phone-validator.component.html',
-  styleUrls: ['./phone-validator.component.css', '../../assets/css/flags.min.css'],
+  styleUrls: ['./phone-validator.component.css', '../../assets/css/flags.min.css', '../../assets/css/kendo.css'],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, RequiredValidation]
 })
 export class PhoneValdiatorComponent implements OnInit, ControlValueAccessor {

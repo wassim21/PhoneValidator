@@ -1,6 +1,6 @@
 {
   "name": "w-phone-validator",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -37,9 +37,6 @@
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^8.9.5",
-    "@progress/kendo-angular-common": "^1.0.0",
-    "@progress/kendo-angular-l10n": "^2.0.0",
-    "@progress/kendo-theme-default": "latest",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
