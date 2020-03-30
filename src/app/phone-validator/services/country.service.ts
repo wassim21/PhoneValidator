@@ -3,7 +3,7 @@ import { Country } from '../models/country.model';
 import { countries } from '../consts/countries';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
